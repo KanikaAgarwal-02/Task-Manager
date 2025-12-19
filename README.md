@@ -59,7 +59,7 @@ CLIENT_URL=https://your-frontend-url.vercel.app
 
 ### Frontend (`frontend/.env`)
 ```env
-VITE_API_URL=https://your-backend-url.onrender.com/api
+VITE_API_URL=https://task-manager-backend-lef3.onrender.com/api
 ```
 
 ---
