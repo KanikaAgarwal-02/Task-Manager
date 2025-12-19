@@ -54,7 +54,7 @@ and secure authentication.
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/taskmanager
 JWT_SECRET=supersecretkey
-CLIENT_URL=https://your-frontend-url.vercel.app 
+CLIENT_URL=https://task-manager-virid-kappa-44.vercel.app/ 
 ```
 
 ### Frontend (`frontend/.env`)
