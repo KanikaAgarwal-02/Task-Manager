@@ -4,29 +4,54 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import http from "http";
 import { Server } from "socket.io";
+import userRoutes from "./routes/userRoutes";
+import testRoutes from "./routes/testRoutes";
+import cookieParser from "cookie-parser";
+import taskRoutes from "./routes/taskRoutes";
+import { initSocket } from "./sockets";
 
 dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(
+  cors({ 
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+    ],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/api/test", testRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
+
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+    ],
+    credentials: true,
   }
 });
 
-app.use(cors({ origin: true, credentials: true }));
-app.use(express.json());
+initSocket(io);
+
+io.on("connection", socket => {
+  console.log("🔌 User connected:", socket.id);
+});
 
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.error("❌ Mongo Error", err));
-
-io.on("connection", socket => {
-  console.log("🔌 User connected:", socket.id);
-});
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
