@@ -9,6 +9,7 @@ import testRoutes from "./routes/testRoutes";
 import cookieParser from "cookie-parser";
 import taskRoutes from "./routes/taskRoutes";
 import { initSocket } from "./sockets";
+import connectDB from "./config/db";
 
 dotenv.config();
 
@@ -56,12 +57,14 @@ io.on("connection", socket => {
   console.log("🔌 User connected:", socket.id);
 });
 
-mongoose
-  .connect(process.env.MONGO_URI as string)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ Mongo Error", err));
-
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();
