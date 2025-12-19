@@ -32,6 +32,10 @@ app.use("/api/test", testRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Task Manager API is running 🚀");
+});
+
 const io = new Server(server, {
   cors: {
     origin: [
