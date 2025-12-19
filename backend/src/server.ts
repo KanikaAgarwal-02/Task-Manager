@@ -20,6 +20,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://127.0.0.1:5173",
+      "https://task-manager-virid-kappa-44.vercel.app",
     ],
     credentials: true,
   })
