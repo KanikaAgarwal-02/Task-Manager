@@ -283,7 +283,7 @@ export default function Dashboard() {
               </p>
 
               <p className="text-xs text-gray-400 mt-3">
-                📅 Due: {task.dueDate}
+                📅 Due: {formatDate(task.dueDate)}
               </p>
 
               <div className="flex gap-2 mt-4">
@@ -352,6 +352,14 @@ const PriorityBadge = ({ priority }: { priority: string }) => {
       {priority}
     </span>
   );
+};
+
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 };
 
 /* Overdue logic */
